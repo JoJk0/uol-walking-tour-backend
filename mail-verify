@@ -1,0 +1,38 @@
+      // Send the confirmation email
+      $name = htmlspecialchars($_POST['name']);
+      $email = htmlspecialchars($_POST['email']);
+      $subject = 'Verify your email - UoL Artwork'
+      $text = htmlspecialchars($_POST['text']);
+      $me_name = 'UoL Artwork Walking Tour App';
+      $me_email = 'donotreply@artwork.liv.ac.uk';
+
+
+      // message
+      $message = '
+      <html>
+      <head>
+        <title>'.$subject.'</title>
+        <style type="text/css">
+        body{ font-family: sans-serif; }
+         .text{ padding: 1em; margin: 1em; margin-top: 0; background: #FAFAFA; }
+         .disclaimer{ font-size: 0.8em; font-style: italic; padding-left: 2em }
+        </style>
+      </head>
+      <body>
+        <p class="text">You have recently registered on the University of Liverpool Artwork. We need you to verify your email. System administrator has <b>granted</b> the access for you.</p>
+        <p class="text"></p>
+        <p class="disclaimer">This message has been sent automatically, if you have not registered for admin access for University of Liverpool Artwork then disregard this email.</p>
+      </body>
+      </html>
+      ';
+
+      // To send HTML mail, the Content-type header must be set
+      $headers  = 'MIME-Version: 1.0' . "\r\n";
+      $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+
+      // Additional headers
+      $headers .= 'To: '.$me_name.' <'.$me_email.'>' . "\r\n";
+      $headers .= 'From: '.$name.' <'.$email.'>' . "\r\n";
+
+      // Mail it
+      mail($me_email, $subject, $message, $headers);

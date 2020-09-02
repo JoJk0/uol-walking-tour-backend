@@ -1,0 +1,705 @@
+/*
+    UoL ARTWORK SASS FILE
+    ----------------------------------
+    11/11/2018
+
+*/
+
+/* STYLE RESET */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* CONSTANTS */
+
+$C_PRIMARY: #FFF;
+$C_ACCENT: #2979ff;
+$C_MILD_BG: #F1F6FE;
+$C_TEXT: #000;
+$C_GREYTEXT: #444;
+$C_ERROR: #ff8a80;
+$C_SUCCESS: #F0F8E9;
+$C_SUCCESS_TXT: #32691D;
+$C_ERROR: #FCE4EC;
+$C_ERROR_TXT: #F34436;
+$C_MATERIAL_RED: #f44336;
+$C_MATERIAL_GREEN: #4CAF50;
+
+@keyframes cssAnimation {
+    to {
+        height:0;
+        overflow:hidden;
+    }
+}
+
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  background: $C_PRIMARY;
+  color: $C_TEXT;
+}
+.cf{
+  clear: both;
+}
+a{
+  color: $C_GREYTEXT !important;
+  text-decoration: none;
+  &:hover{
+    color: lighten($C_GREYTEXT, 10%) !important;
+  }
+}
+.button{
+  font-family: 'Roboto';
+  font-size: 1em;
+  border: 0;
+  display: block;
+  padding: 0.5em 1.5em;
+  border-radius: 2em;
+  margin-right: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  line-height: 2em;
+  &.with-icon{
+    padding: 0.5em 1em;
+    padding-right: 1.5em;
+  }
+  &.centered{
+    margin: 1em auto;
+  }
+  &.main{
+    background: $C_ACCENT;
+    color: #FFF;
+    font-weight: 500;
+    i{
+      font-weight: 800;
+      padding-right: 0.5em;
+    }
+    &:hover{
+      background: lighten($C_ACCENT, 10%);
+    }
+  }
+  &.standard{
+    background: transparent;
+    border: 1px solid #000;
+    &:hover{
+      border: 1px solid lighten(rgb(0,0,0), 30%);
+      color: lighten(rgb(0,0,0), 30%);
+    }
+  }
+  &.red{
+    background: #f44336;
+    color: #fff;
+    width: 1em;
+    height: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    padding: 1em;
+    &:hover{
+      background: lighten(#f44336, 10%);
+    }
+  }
+}
+.form-input{
+  border: 0;
+  font-weight: 100;
+  font-family: 'Roboto';
+  font-size: 1.5em;
+  display: flex;
+  outline-width: 1px;
+  outline-color: #DDD;
+  align-items: center;
+  i{
+    padding: 0.4em;
+    padding-right: 0;
+  }
+  input, label{
+    border: 0;
+    font-weight: 300;
+    font-family: 'Roboto';
+    font-size: 0.7em;
+    padding: 0.5em;
+    outline-width: 1px;
+    outline-color: #DDD;
+    flex-grow: 1;
+  }
+}
+label{
+  cursor: pointer;
+}
+input.form-input, label.form-input{
+  padding: 0.5em;
+}
+.notification{
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: cssAnimation 0s ease-in 5s forwards;
+  animation-fill-mode: forwards;
+  p{
+    padding: 1em;
+    margin: 1em;
+    border-radius: 0.3em;
+    line-height: 140%;
+    position: relative;
+    z-index: 9999;
+    &.success{
+      background: $C_SUCCESS;
+      color: $C_SUCCESS_TXT;
+      box-shadow: 0 2px 9px rgba($C_SUCCESS_TXT,0.2);
+    }
+    &.error{
+      background: $C_ERROR;
+      color: $C_ERROR_TXT;
+      box-shadow: 0 2px 9px rgba($C_ERROR_TXT,0.2);
+    }
+  }
+}
+/* LOGIN AND REGISTER */
+  .input{
+    display: block;
+    border: 0;
+    padding: 0.7em;
+    font-size: 1.2em;
+    font-weight: 300;
+    font-family: 'Roboto';
+    box-shadow: 0 2px 9px rgba(0,0,0,0.15);
+    border-radius: 0.3em;
+    margin: 1em;
+    margin-top: 0;
+    width: 12em;
+    color: $C_GREYTEXT;
+    outline-width: 1px;
+    outline-color: #444;
+  }
+#login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  img{
+    max-width: 512px;
+    width: 15vmax;
+  }
+  .title{
+    font-size: 3em;
+    font-weight: 100;
+    padding: 1em;
+    color: $C_GREYTEXT;
+  }
+  .copyright{
+    color: $C_GREYTEXT;
+    font-weight: 300;
+    padding: 1em;
+  }
+}
+.reg_info{
+  padding: 1em;
+  line-height: 150%;
+  color: #444;
+  text-align: center;
+  max-width: 40em;
+}
+
+/* ARTWORK */
+
+.content{
+  .top{
+    background: $C_MILD_BG;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .menu{
+      display: flex;
+      flex-direction: row;
+      font-size: 1em;
+      font-weight: 500;
+      .entry{
+        color: $C_GREYTEXT;
+        padding: 2em;
+        text-transform: uppercase;
+        &.active{
+          color: $C_ACCENT;
+        }
+      }
+    }
+    .actions{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  .artwork-list{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    .artwork{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      width: 10em;
+      img{
+        width: 12em;
+      }
+      .edit-button{
+        background: $C_ACCENT;
+        border-radius: 100%;
+        color: white;
+        width: 1.8em;
+        height: 1.8em;
+        padding: 0.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: -1em;
+        border: 5px solid #FFF;
+        cursor: pointer;
+        &:hover{
+          background: lighten($C_ACCENT, 10%);
+        }
+        i{
+          width: 1em;
+        }
+      }
+      .title{
+        font-size: 1.5em;
+        position: relative;
+        top: -0.4em;
+        text-align: center;
+        line-height: 120%;
+      }
+      .author{
+        color: $C_GREYTEXT;
+        font-size: 0.8em;
+      }
+    }
+    .tour{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      width: 10em;
+      .top-img{
+        width: 10em;
+        height: 10em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        background: $C_MILD_BG;
+        img{
+          width: 3.5em;
+        }
+      }
+      .edit-button{
+        background: $C_ACCENT;
+        border-radius: 100%;
+        color: white;
+        width: 1.8em;
+        height: 1.8em;
+        padding: 0.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: -3em;
+        left: 3em;
+        border: 5px solid #FFF;
+        cursor: pointer;
+        align-self: right;
+        &:hover{
+          background: lighten($C_ACCENT, 10%);
+        }
+        i{
+          width: 1em;
+        }
+      }
+      .title{
+        font-size: 1.5em;
+        position: relative;
+        top: -1em;
+        text-align: center;
+        line-height: 120%;
+      }
+    }
+  }
+  #map-picker-cnt{
+    display: none;
+    justify-content: center;
+    background: rgba($C_MILD_BG, 0.5);
+    align-items: center; 
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1111;
+    #map-picker{
+      background: #FFF;
+      box-shadow: 0 2px 9px rgba(#005df2, 0.17);
+      #map{
+        width: 50vw;
+        min-width: 800px;
+        height: 50vh;
+        min-height: 480px;
+      }
+    }
+  }
+  #artwork-delete-cnt{
+    display: none;
+    background: rgba($C_MILD_BG, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 1101;
+    #artwork-delete-confirmer{
+      background: #FFF;
+      box-shadow: 0 2px 9px rgba(#005df2, 0.17);
+      display: flex;
+      flex-direction: column;
+      padding: 1em;
+      .window-prompt{
+        padding: 2em;
+      }
+      .decision{
+        display: flex;
+        justify-content: space-between;
+        padding-left: 1em;
+      }
+    }
+  }
+  .artwork-edit-bg, .tour-edit-bg{
+    display: none;
+    background: rgba($C_MILD_BG, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 1101;
+    .artwork-edit, .tour-edit{
+      background: #FFF;
+      box-shadow: 0 2px 9px rgba(#005df2, 0.17);
+        .top-bar{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1em;
+          #back i, #back-picker i{
+            font-weight: 100;
+            font-size: 2em;
+            padding: 0 0.3em;
+            cursor: pointer;
+          }
+          .form-input.title{
+            flex-grow: 1;
+            margin: 0 1em;
+            margin-left: 0;
+            width: 1em;
+            &.centered{
+              text-align: center;
+            }
+          }
+          .button.main{
+            margin-right: 0;
+          }
+        }
+      .artwork-view{
+        display: flex;
+        flex-direction: column;
+        max-width: 45em;
+        width: 60vw;
+        min-width: 375px;
+        .form{
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          flex-wrap: wrap;
+          .photo{
+            width: 12em;
+            height: 12em;
+            margin: 2em;
+            border-radius: 1em;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            &:hover{
+              background-size: 120%;
+              .edit{
+                opacity: 1;
+              }
+            }
+            .edit{
+              opacity: 0;
+              background: rgba($C_MILD_BG,0.9);
+              width: 12em;
+              height: 12em;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              color: #3a4451;
+              transition: all 0.2s ease;
+              &.add{
+                opacity: 1;
+              }
+              i{
+                font-size: 4em;
+              }
+              .txt{
+                padding: 0.5em;
+              }
+            }
+          }
+          .inputs{
+            flex-grow: 1;
+          }
+          #coords{
+            cursor: pointer;
+          }
+        }
+        textarea.form-input.text{
+          padding: 1em;
+          margin-top: 1em;
+          border-top: 1px solid #EEE;
+          font-weight: 300;
+          font-size: 1em;
+          line-height: 140%;
+          height: 7em;
+        }
+      }
+    }
+  }
+
+}
+
+/* TOURS */
+
+.form.tours{
+	height: 50vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+.photo-select-tour-cnt{
+	width: 2em;
+	overflow: hidden;
+	transition: all 0.2s ease;
+	background: transparent;
+	border-radius: 0.5em;
+	padding: 1em;
+	&:hover{
+		background: $C_MILD_BG;
+		width: 6em;
+	}
+	.photo-select-tour{
+		width: 6em;
+		#photo-file-button{
+				background-position: center;
+				background-size: 100%;
+				width: 2em;
+				height: 2em;
+				display: block;
+				float: left;
+		}
+		.title{
+			padding-left: 3em;
+			width: 0;
+			font-weight: 300;
+		}
+	}
+}
+
+.artwork-in-tour{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid #EEE;
+	.img{
+		
+	}
+	.name{
+		padding: 1em;
+	}
+	.title{
+		flex-grow: 1;
+		font-size: 1.2em;
+	}
+	.author{
+		color: #777;
+	}
+	label.container{
+		display: block;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 1em;
+		margin: 1em;
+		input{
+			position: absolute;
+			opacity: 0;
+			cursor: pointer;
+			height: 0;
+			width: 0;
+		}
+		.checkmark{
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 25px;
+			width: 25px;
+			border: 1px solid #444;
+			border-radius: 100%;
+			&:after{
+				left: 9px;
+				top: 5px;
+				width: 5px;
+				height: 10px;
+				border: solid white;
+				border-width: 0 3px 3px 0;
+				-webkit-transform: rotate(45deg);
+				-ms-transform: rotate(45deg);
+				transform: rotate(45deg);
+				content: "";
+				position: absolute;
+				display: none;
+			}
+		}
+
+		&:hover{
+			input ~ .checkmark {
+				background-color: $C_MILD_BG;
+				border: 1px solid #444;
+			}
+		}
+
+		input:checked ~ .checkmark {
+				background-color: $C_ACCENT;
+				border: 1px solid $C_ACCENT;
+		}
+		
+		input:checked ~ .checkmark:after {
+				display: block;
+		}
+	}
+}
+
+/* ADMIN SETTINGS */
+.pending-title, .admins-title{
+	text-align: center;
+	padding: 1em;
+	font-size: 1.5em;
+	font-weight: 300;
+}
+.pending-admins-list, .admins-list{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	.admin{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: $C_MILD_BG;
+		border-radius: 5em;
+		margin: 1em;
+		.username{
+			padding: 0.7em;
+		}
+		.admin-button{
+			padding-right: 0.7em;
+			color: #FFF;
+			cursor: pointer;
+			border: 0;
+			background: none;
+			&.accept{
+				color: $C_MATERIAL_GREEN;
+				&:hover{
+					color: lighten($C_MATERIAL_GREEN, 10%);
+				}
+			}
+			&.decline{
+				color: $C_MATERIAL_RED;
+				&:hover{
+					color: lighten($C_MATERIAL_RED, 10%);
+				}
+			}
+		}
+	}
+}
+
+/* User settings */
+.page.settings{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+.settings-user{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
